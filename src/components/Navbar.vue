@@ -19,7 +19,7 @@
               <em>User</em>
             </template>
             <b-dropdown-item :to="{ name: 'Login' }">Profile</b-dropdown-item>
-            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+            <b-dropdown-item href="#" @click="signOut">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
@@ -29,6 +29,24 @@
 
 <script>
   export default {
-    name: 'Navbar'
+    props : ["nextUrl"],
+    name: 'Navbar',
+    methods : {
+      signOut(e) {
+        e.preventDefault();
+
+        if (localStorage.getItem('jwt') != null){
+            localStorage.removeItem('jwt');
+            localStorage.removeItem('user');
+
+            if(this.$route.params.nextUrl != null){
+                this.$router.push(this.$route.params.nextUrl)
+            }
+            else{
+                this.$router.push('/')
+            }
+        }
+      }
+    }
   };
 </script>
