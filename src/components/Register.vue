@@ -39,13 +39,14 @@
 </style>
 
 <script>
+    const config = require('config');
     export default {
         props : ["nextUrl"],
         data(){
             return {
                 first_name : "",
                 last_name : "",
-                phone : "",
+                mobile_num : "",
                 password : "",
                 password_confirmation : ""
             }
@@ -56,18 +57,22 @@
 
                 if (this.password === this.password_confirmation && this.password.length > 3)
                 {
-                    const url = "http://localhost:3000/register"
-                    this.$http.post(url, {
-                        User: {
-                            FirstName: this.first_name,
-                            LastName: this.last_name,
-                            MobileNum: this.phone,
-                            Password: this.password
-                        }
+                    fetch(`${config.authUrl}/register`, {
+                            method: 'post',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                User: {
+                                    FirstName: this.first_name,
+                                    LastName: this.last_name,
+                                    MobileNum: this.mobile_num,
+                                    Password: this.password
+                                }
+                            })
                     })
-                    .then(response => {
-                        localStorage.setItem('user',JSON.stringify(response.data.user))
-                        localStorage.setItem('jwt',response.data.token)
+                    .then(response => response.json())
+                    .then(data => {
+                        localStorage.setItem('user',JSON.stringify(data.user))
+                        localStorage.setItem('jwt',data.token)
 
                         if (localStorage.getItem('jwt') != null){
                             this.$emit('loggedIn')

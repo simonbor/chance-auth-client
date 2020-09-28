@@ -29,6 +29,7 @@
 </style>
 
 <script>
+    const config = require('config');
     export default {
         data(){
             return {
@@ -40,16 +41,22 @@
             handleSubmit(e){
                 e.preventDefault()
                 if (this.password.length > 0) {
-                    this.$http.post('http://localhost:3000/login', {
-                        User: {
-                            MobileNum: this.phone,
-                            Password: this.password
-                        }
+
+                    fetch(`${config.authUrl}/login`, {
+                        method: 'post',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            User: {
+                                MobileNum: this.phone,
+                                Password: this.password
+                            }
+                        })
                     })
-                    .then(response => {
-                        let is_admin = response.data.user.RoleId;
-                        localStorage.setItem('user',JSON.stringify(response.data.user));
-                        localStorage.setItem('jwt',response.data.token);
+                    .then(response => response.json())
+                    .then(data => {
+                        let is_admin = data.user.RoleId;
+                        localStorage.setItem('user',JSON.stringify(data.user));
+                        localStorage.setItem('jwt', data.token);
 
                         if (localStorage.getItem('jwt') != null){
                             this.$emit('loggedIn')

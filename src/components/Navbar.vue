@@ -18,7 +18,7 @@
             <template v-slot:button-content>
               <em>User</em>
             </template>
-            <b-dropdown-item :to="{ name: 'Login' }">Profile</b-dropdown-item>
+            <b-dropdown-item :to="{ name: 'Register' }">Profile</b-dropdown-item>
             <b-dropdown-item href="#" @click="signOut">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
