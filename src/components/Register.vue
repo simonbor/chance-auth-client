@@ -43,26 +43,27 @@
         props : ["nextUrl"],
         data(){
             return {
-                name : "",
-                email : "",
+                first_name : "",
+                last_name : "",
+                phone : "",
                 password : "",
-                password_confirmation : "",
-                is_admin : null
+                password_confirmation : ""
             }
         },
         methods : {
             handleSubmit(e) {
                 e.preventDefault()
 
-                if (this.password === this.password_confirmation && this.password.length > 0)
+                if (this.password === this.password_confirmation && this.password.length > 3)
                 {
-                    let url = "http://localhost:3000/register"
-                    if(this.is_admin != null || this.is_admin == 1) url = "http://localhost:3000/register-admin"
+                    const url = "http://localhost:3000/register"
                     this.$http.post(url, {
-                        name: this.name,
-                        email: this.email,
-                        password: this.password,
-                        is_admin: this.is_admin
+                        User: {
+                            FirstName: this.first_name,
+                            LastName: this.last_name,
+                            MobileNum: this.phone,
+                            Password: this.password
+                        }
                     })
                     .then(response => {
                         localStorage.setItem('user',JSON.stringify(response.data.user))
