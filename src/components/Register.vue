@@ -2,34 +2,27 @@
     <div>
         <h4>Register</h4>
         <form>
-            <label for="name">Name</label>
+            <label for="first_name">First Name</label>
             <div>
-                <input id="name" type="text" v-model="name" required autofocus>
+                <input id="first_name" type="text" v-model="first_name" required autofocus>
             </div>
-
-            <label for="email" >E-Mail Address</label>
+            <label for="last_name">Last Name</label>
             <div>
-                <input id="email" type="email" v-model="email" required>
+                <input id="last_name" type="text" v-model="last_name" required autofocus>
             </div>
-
+            <label for="phone">Mobile Number</label>
+            <div>
+                <input id="phone" type="phone" v-model="mobile_num" required>
+            </div>
             <label for="password">Password</label>
             <div>
                 <input id="password" type="password" v-model="password" required>
             </div>
-
             <label for="password-confirm">Confirm Password</label>
             <div>
                 <input id="password-confirm" type="password" v-model="password_confirmation" required>
             </div>
-
-            <label for="password-confirm">Is this an administrator account?</label>
-            <div>
-                <select v-model="is_admin">
-                    <option value=1>Yes</option>
-                    <option value=0>No</option>
-                </select>
-            </div>
-
+            <label></label>
             <div>
                 <button type="submit" @click="handleSubmit">
                     Register
@@ -38,6 +31,12 @@
         </form>
     </div>
 </template>
+
+<style scoped>
+    label {
+        margin-top: 5px;
+    }
+</style>
 
 <script>
     export default {
