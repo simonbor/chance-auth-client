@@ -35,11 +35,11 @@
       signOut(e) {
         e.preventDefault();
 
-        if (localStorage.getItem('jwt') != null){
+        if (localStorage.getItem('jwt') != null) {
             localStorage.removeItem('jwt');
             localStorage.removeItem('user');
 
-            if(this.$route.params.nextUrl != null){
+            if(this.$route.params.nextUrl != null) {
                 this.$router.push(this.$route.params.nextUrl)
             }
             else{

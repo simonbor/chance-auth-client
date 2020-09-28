@@ -2,16 +2,17 @@
     <div>
         <h4>Login</h4>
         <form>
-            <label for="email" >E-Mail Address</label>
+            <label for="phone" >Mobile Number</label>
             <div>
-                <input id="email" type="email" v-model="email" required autofocus>
+                <input id="phone" type="phone" v-model="phone" required autofocus>
             </div>
+            <label for="password">Password</label>
             <div>
-                <label for="password" >Password</label>
                 <div>
                     <input id="password" type="password" v-model="password" required>
                 </div>
             </div>
+            <label></label>
             <div>
                 <button type="submit" @click="handleSubmit">
                     Login
@@ -21,11 +22,17 @@
     </div>
 </template>
 
+<style scoped>
+    label {
+        margin-top: 5px;
+    }
+</style>
+
 <script>
     export default {
         data(){
             return {
-                email : "",
+                phone : "",
                 password : ""
             }
         },
@@ -34,11 +41,13 @@
                 e.preventDefault()
                 if (this.password.length > 0) {
                     this.$http.post('http://localhost:3000/login', {
-                        email: this.email,
-                        password: this.password
+                        User: {
+                            MobileNum: this.phone,
+                            Password: this.password
+                        }
                     })
                     .then(response => {
-                        let is_admin = response.data.user.is_admin;
+                        let is_admin = response.data.user.RoleId;
                         localStorage.setItem('user',JSON.stringify(response.data.user));
                         localStorage.setItem('jwt',response.data.token);
 
@@ -48,7 +57,7 @@
                                 this.$router.push(this.$route.params.nextUrl)
                             }
                             else {
-                                if(is_admin== 1){
+                                if(is_admin == 1){
                                     this.$router.push('admin')
                                 }
                                 else {
