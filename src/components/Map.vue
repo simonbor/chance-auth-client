@@ -22,9 +22,6 @@ export default {
     });
     this.platform = platform;
 
-    // const response = await this.$http.post('https://chance-app.herokuapp.com/chance-list', {"Address": {"CityId": 1}, "Chance": {}});
-    // const response = await this.$http.post('https://chance-app.herokuapp.com/chance-list', {"Address": {"CityId": 1},	"Chance": {"DateStart": "2020-09-07 17:00:00"}});
-
     const response = await fetch(`${config.apiUrl}/chance-list`,
       {
         method: 'post',
@@ -70,22 +67,24 @@ export default {
         markers.push(marker);
       })
 
-      // add markers to the group
-      group.addObjects(markers);
-      map.addObject(group);
+      if(markers.length > 0) {  // prevent here map client error
+        // add markers to the group
+        group.addObjects(markers);
+        map.addObject(group);
 
-      group.addEventListener('tap', function (evt) {
-        var bubble =  new H.ui.InfoBubble(evt.target.getGeometry(), {
-          content: evt.target.getData()
+        group.addEventListener('tap', function (evt) {
+          var bubble =  new H.ui.InfoBubble(evt.target.getGeometry(), {
+            content: evt.target.getData()
+          });
+          ui.getBubbles().forEach(bub => ui.removeBubble(bub)); //remove other infobubbles
+          ui.addBubble(bubble); // show info bubble
+        }, false);
+
+        // get geo bounding box for the group and set it to the map ( centralizing )
+        map.getViewModel().setLookAtData({
+          bounds: group.getBoundingBox()
         });
-        ui.getBubbles().forEach(bub => ui.removeBubble(bub)); //remove other infobubbles       
-        ui.addBubble(bubble); // show info bubble
-      }, false);
-
-      // get geo bounding box for the group and set it to the map ( centralizing )
-      map.getViewModel().setLookAtData({
-        bounds: group.getBoundingBox()
-      });
+      }
 
       addEventListener("resize", () => map.getViewPort().resize());
 

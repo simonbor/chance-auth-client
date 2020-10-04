@@ -35,7 +35,12 @@
       EventBus
     },
     data() {
-      return { user: '' }
+      if (localStorage.getItem('user') != null) {
+        const user = JSON.parse(localStorage.getItem('user'));
+        return { user: user.FirstName };
+      }
+
+      return { user: '' };
     },
     mounted () {
       const that = this;
@@ -59,7 +64,7 @@
                 this.$router.push(this.$route.params.nextUrl)
             }
             else{
-                this.$router.push('/')
+                (this.$route.path !== '/') && this.$router.push('/')
             }
         }
       }
