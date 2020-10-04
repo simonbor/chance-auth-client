@@ -8,6 +8,7 @@
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <b-nav-item :to="{ name: 'Userboard' }">Dashboard</b-nav-item>
+          <b-nav-item :to="{ name: 'Map' }">Map</b-nav-item>
           <b-nav-item :to="{ name: 'Admin' }">About</b-nav-item>
         </b-navbar-nav>
 

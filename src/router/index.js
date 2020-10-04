@@ -6,18 +6,20 @@ import Register from '@/components/Register'
 import UserBoard from '@/components/UserBoard'
 import Admin from '@/components/Admin'
 import NotFound from '@/components/NotFound';
+import Map from '@/components/Map';
 
 Vue.use(Router)
 
 let router = new Router({
   mode: 'history',
   routes: [
+    { path: '*', name: 'NotFound', component: NotFound },
     { path: '/', name: 'HelloWorld', component: HelloWorld },
     { path: '/login', name: 'Login', component: Login, meta: { guest: true } },
     { path: '/register', name: 'Register', component: Register, meta: { guest: true } },
     { path: '/dashboard', name: 'Userboard', component: UserBoard, meta: { requiresAuth: true } },
     { path: '/admin', name: 'Admin', component: Admin, meta: { requiresAuth: true, is_admin: true } },
-    { path: '*', name: 'NotFound', component: NotFound }
+    { path: '/map', name: 'Map', component: Map, meta: { requiresAuth: true } }
   ]
 })
 
