@@ -69,7 +69,8 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   externals: {
     // global app config object
     config: JSON.stringify({
-      authUrl: 'http://localhost:3000'
+      authUrl: 'http://localhost:3000',
+      apiUrl: 'http://localhost:8080'
     })
   }
 })
