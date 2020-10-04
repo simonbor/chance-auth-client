@@ -19,6 +19,12 @@
                 </button>
             </div>
         </form>
+        <div>
+            <p class="register">
+                Don't have an account? Register 
+                <b-link :to="{ name: 'Register' }">here</b-link>
+            </p>
+        </div>
     </div>
 </template>
 
@@ -26,11 +32,19 @@
     label {
         margin-top: 5px;
     }
+    .register {
+        margin-top: 20px;
+        font-size: smaller;
+    }
 </style>
 
 <script>
+    import EventBus from '../event-bus.js'
     const config = require('config');
     export default {
+        components: {
+            EventBus
+        },
         data(){
             return {
                 phone : "",
@@ -59,16 +73,16 @@
                         localStorage.setItem('jwt', data.token);
 
                         if (localStorage.getItem('jwt') != null){
-                            this.$emit('loggedIn')
+                            // this.$emit('loggedIn')
+                            EventBus.$emit('loggedIn')
                             if(this.$route.params.nextUrl != null){
                                 this.$router.push(this.$route.params.nextUrl)
-                            }
-                            else {
+                            } else {
                                 if(is_admin == 1){
-                                    this.$router.push('admin')
+                                    this.$router.push('map')
                                 }
                                 else {
-                                    this.$router.push('dashboard')
+                                    this.$router.push('map')
                                 }
                             }
                         }
