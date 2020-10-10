@@ -25,14 +25,22 @@ export default {
     const response = await fetch(`${config.apiUrl}/chance-list`,
       {
         method: 'post',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+        },
         // body: JSON.stringify({"Address": {"CityId": 1}, "Chance": {"DateStart": "2020-08-07 17:00:00"}})
         body: JSON.stringify({"Address": {"CityId": 1}, "Chance": {}})
       });
-    response.data = await response.json();
+    response.json = await response.json();
+
+    if(!response.ok && response.json.statusCode === 401) {
+      console.log(response.json.statusText);
+      this.logOff();
+    }
 
     const locations = [];
-    response.data.map(chance => {
+    response.json.data.map(chance => {
       if (chance.Longitude != null && chance.Latitude != null) {
         locations.push({ lat: chance.Latitude, lng: chance.Longitude });
       }

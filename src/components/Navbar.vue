@@ -55,18 +55,8 @@
       signOut(e) {
         e.preventDefault();
 
-        if (localStorage.getItem('jwt') != null) {
-            localStorage.removeItem('jwt');
-            localStorage.removeItem('user');
-            this.user = '';
-
-            if(this.$route.params.nextUrl != null) {
-                this.$router.push(this.$route.params.nextUrl)
-            }
-            else{
-                (this.$route.path !== '/') && this.$router.push('/')
-            }
-        }
+        this.user = '';
+        this.logOff();
       }
     }
   };
