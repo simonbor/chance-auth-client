@@ -124,7 +124,7 @@ const webpackConfig = merge(baseWebpackConfig, {
   externals: {
     // global app config object
     config: JSON.stringify({
-      authUrl: 'https://chance-auth.herokuapp.com',
+      authUrl: 'https://chance-auth-server.herokuapp.com',
       apiUrl: 'https://chance-app.herokuapp.com'
     })
   }
