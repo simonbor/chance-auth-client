@@ -71,16 +71,18 @@
                     })
                     .then(response => response.json())
                     .then(data => {
-                        localStorage.setItem('user',JSON.stringify(data.user))
-                        localStorage.setItem('jwt',data.token)
+                        if(data.auth) {
+                            localStorage.setItem('user',JSON.stringify(data.user))
+                            localStorage.setItem('jwt',data.token)
 
-                        if (localStorage.getItem('jwt') != null){
-                            this.$emit('loggedIn')
-                            if(this.$route.params.nextUrl != null){
-                                this.$router.push(this.$route.params.nextUrl)
-                            }
-                            else{
-                                this.$router.push('/')
+                            if (localStorage.getItem('jwt') != null){
+                                this.$emit('loggedIn')
+                                if(this.$route.params.nextUrl != null){
+                                    this.$router.push(this.$route.params.nextUrl)
+                                }
+                                else{
+                                    this.$router.push('/')
+                                }
                             }
                         }
                     })
